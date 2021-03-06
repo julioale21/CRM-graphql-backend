@@ -1,0 +1,15 @@
+{
+  "name": "crm-backend",
+  "version": "1.0.0",
+  "description": "A Graphql API to be consumed by the CRM frontend (Udemy course)",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:unit"
+  },
+  "author": "julio romero",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
