@@ -8,6 +8,18 @@ app.get("/", (req, res) => {
   res.send("All ready");
 });
 
+class Customer {
+  constructor(id, { name, lastName, company, email }) {
+    this.id = id;
+    this.name = name;
+    this.lastName = lastName;
+    this.company = company;
+    this.email = email;
+  }
+}
+
+const customersDB = {};
+
 // Resolver
 const root = {
   customer: () => {
@@ -16,12 +28,15 @@ const root = {
       "name": "Julio",
       "lastName": "Romero",
       "company": "Polica del Chubut",
-      "emails": [
-        { email: "julioale04031981@gmail.com" },
-        { email: "julio_ale21@hotmail.com" },
-      ]
+      "email": "julioale04031981@gmail.com"
     };
   },
+
+  createCustomer : ({ input }) => {
+      const id = require("crypto").randomBytes(10).toString("hex");
+      customersDB[id] = input;
+      return new Customer(id, input);
+  }
 };
 
 app.use('/graphql', graphqlHTTP({
