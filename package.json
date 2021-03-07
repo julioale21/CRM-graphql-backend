@@ -4,11 +4,13 @@
   "description": "A Graphql API to be consumed by the CRM frontend (Udemy course)",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test:unit"
+    "test": "npm run test:unit",
+    "start": "nodemon ./index.js --exec babel-node -e js"
   },
   "author": "julio romero",
   "license": "MIT",
   "dependencies": {
+    "eslint-config-airbnb": "^18.2.1",
     "express": "^4.17.1",
     "nodemon": "^2.0.7"
   },
