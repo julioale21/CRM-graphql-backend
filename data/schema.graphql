@@ -1,7 +1,4 @@
-import { buildSchema } from "graphql";
-
-const schema = buildSchema(`
-  type Customer {
+type Customer {
     id: ID
     name: String
     lastName: String
@@ -59,6 +56,3 @@ const schema = buildSchema(`
   type Mutation {
     createCustomer(input: CustomerInput): Customer 
   }
-`);
-
-export default schema;
