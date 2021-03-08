@@ -21,20 +21,24 @@ const schema = buildSchema(`
     price: Int
   }
 
+  """ Types of valid customers """
   enum CustomerType {
     BASIC
     PREMIUM
   }
 
+  """ Fields input an email """
   input EmailInput {
     email: String
   }
 
+  """ Fields to create a new order """
   input OrderInput {
     product: String
     price: Int
   }
 
+  """ Fields to create a new customer """
   input CustomerInput {
     id: ID
     name: String!
@@ -46,10 +50,12 @@ const schema = buildSchema(`
     orders: [OrderInput]
   }
 
+  """ Get a specific customer """
   type Query {
     getCustomer(id: ID!): Customer
   }
 
+  """ Create new customer """
   type Mutation {
     createCustomer(input: CustomerInput): Customer 
   }
