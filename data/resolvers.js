@@ -3,12 +3,12 @@ import { Customers } from "./db";
 
 export const resolvers = {
   Query: {
-    getCustomers: () => {
-      return Customers.find({});
+    getCustomers: (root, { limit }) => {
+      return Customers.find({}).limit(limit);
     },
 
-    getCustomer : ({ id }) => {
-      return new Customer(id, customersDB[id]);
+    getCustomer : (root, { id }) => {
+      return Customers.findById(id);
     },
   },
   Mutation: {
