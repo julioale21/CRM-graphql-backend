@@ -56,4 +56,5 @@ type Customer {
   type Mutation {
     createCustomer(input: CustomerInput): Customer
     updateCustomer(input: CustomerInput): Customer
+    deleteCustomer(id: ID!): String
   }
