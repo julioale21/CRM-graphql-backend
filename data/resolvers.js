@@ -8,7 +8,12 @@ export const resolvers = {
     },
 
     getCustomer : (root, { id }) => {
-      return Customers.findById(id);
+      return new Promise((resolve, object) => {
+        Customers.findById(id, (error, customer) => {
+          if (error) rejects(error);
+          else resolve(customer);
+        })
+      })
     },
   },
   Mutation: {
