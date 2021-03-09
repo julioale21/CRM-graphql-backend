@@ -49,6 +49,7 @@ type Customer {
 
   """ Get a specific customer """
   type Query {
+    getCustomers: [Customer]
     getCustomer(id: ID!): Customer
   }
 
