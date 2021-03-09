@@ -20,11 +20,20 @@ export const resolvers = {
       })
       newCustomer.id = newCustomer._id;
 
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, object) => {
         newCustomer.save((error) => {
           if (error) rejects(error)
           else resolve(newCustomer)
         })
+      });
+    },
+
+    updateCustomer: (root, { input }) => {
+      return new Promise((resolve, object) => {
+        Customers.findOneAndUpdate({ _id: input.id }, input , { new: true }, (error, customer) => {
+          if (error) rejects(error);
+          else resolve(customer);
+        });
       })
     }
   }

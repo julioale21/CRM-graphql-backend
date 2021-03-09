@@ -54,5 +54,6 @@ type Customer {
 
   """ Create new customer """
   type Mutation {
-    createCustomer(input: CustomerInput): Customer 
+    createCustomer(input: CustomerInput): Customer
+    updateCustomer(input: CustomerInput): Customer
   }
