@@ -41,7 +41,7 @@ type Customer {
     name: String!
     lastName: String!
     company: String!
-    email: String
+    email: String!
     age: Int!
     type: CustomerType!
     orders: [OrderInput]
