@@ -11,7 +11,7 @@ const customersSchema = new mongoose.Schema({
   name: String,
   lastName: String,
   company: String,
-  email: String,
+  emails: Array,
   age: Number,
   type: String,
   orders: Array
