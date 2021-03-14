@@ -3,8 +3,8 @@ import { Customers } from "./db";
 
 export const resolvers = {
   Query: {
-    getCustomers: (root, { limit }) => {
-      return Customers.find({}).limit(limit);
+    getCustomers: (root, { limit, offset }) => {
+      return Customers.find({}).limit(limit).skip(offset);
     },
 
     getCustomer : (root, { id }) => {
