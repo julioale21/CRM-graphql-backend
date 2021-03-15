@@ -51,6 +51,7 @@ type Customer {
   type Query {
     getCustomers(limit: Int, offset: Int): [Customer]
     getCustomer(id: ID!): Customer
+    totalCustomers: String
   }
 
   """ Create new customer """

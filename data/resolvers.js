@@ -13,8 +13,17 @@ export const resolvers = {
           if (error) rejects(error);
           else resolve(customer);
         })
-      })
+      });
     },
+
+    totalCustomers: (root) => {
+      return new Promise((resolve, rejects) => {
+        Customers.countDocuments({}, (error, count) => {
+          if (error) rejects(error);
+          else resolve(count);
+        })
+      });
+    }
   },
   Mutation: {
     createCustomer : (root, { input }) => {
