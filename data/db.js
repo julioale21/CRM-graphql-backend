@@ -16,7 +16,13 @@ const customersSchema = new mongoose.Schema({
   type: String,
   orders: Array
 });
-
 const Customers = mongoose.model("customers", customersSchema);
 
-export { Customers };
+const productsSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  stock: Number,
+});
+const Products = mongoose.model("products", productsSchema);
+
+export { Customers, Products };
