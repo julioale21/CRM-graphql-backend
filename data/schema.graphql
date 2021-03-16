@@ -1,4 +1,4 @@
-type Customer {
+  type Customer {
     id: ID
     name: String
     lastName: String
@@ -11,6 +11,13 @@ type Customer {
 
   type Email {
     email: String
+  }
+
+  type Product {
+    id: ID
+    name: String!
+    price: Int!
+    stock: Int!
   }
 
   type Order {
@@ -47,6 +54,13 @@ type Customer {
     orders: [OrderInput]
   }
 
+  input ProductInput {
+    id: ID
+    name: String!
+    price: Int!
+    Stock: Int!
+  }
+
   """ Get a specific customer """
   type Query {
     getCustomers(limit: Int, offset: Int): [Customer]
@@ -59,4 +73,6 @@ type Customer {
     createCustomer(input: CustomerInput): Customer
     updateCustomer(input: CustomerInput): Customer
     deleteCustomer(id: ID!): String
+
+    createProduct(input: ProductInput): Product
   }

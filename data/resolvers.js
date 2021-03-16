@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Customers } from "./db";
+import { Customers, Products } from "./db";
 
 export const resolvers = {
   Query: {
@@ -62,6 +62,22 @@ export const resolvers = {
           else resolve("Customer successfully deleted");
         });
       });
+    },
+
+    createProduct: (root, { input }) => {
+      const newProduct = new Products({
+        name: input.name,
+        price: input.price,
+        stock: input.stock,
+      });
+
+      newProduct.id = newProduct._id;
+      return new Promise((resolve, rejects) => {
+        newProduct.save((error) => {
+          if (error) rejects(error);
+          else resolve(newProduct);
+        })
+      })
     }
   }
 }
