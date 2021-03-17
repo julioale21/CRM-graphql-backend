@@ -34,8 +34,8 @@ export const resolvers = {
         Products.findById(id, (error, product) => {
           if (error) reject(error);
           else resolve(product);
-        })
-      })
+        });
+      });
     }
   },
   Mutation: {
@@ -91,6 +91,15 @@ export const resolvers = {
           else resolve(newProduct);
         })
       })
+    },
+
+    updateProduct: (root, { input }) => {
+      return new Promise((resolve, reject) => {
+        Products.findByIdAndUpdate({ _id: input.id }, input, { new: true }, (error, product) => {
+          if (error) reject(error);
+          else resolve(product);
+        });
+      });
     }
   }
 }

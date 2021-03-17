@@ -80,6 +80,7 @@
 
     """ Get a specific product by id """
     getProduct(id: ID!): Product
+
   }
 
   
@@ -99,4 +100,7 @@
 
     """ Create a new product """
     createProduct(input: ProductInput): Product
+
+    """ Update an existing product """
+    updateProduct(input: ProductInput): Product
   }
