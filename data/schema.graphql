@@ -61,18 +61,42 @@
     stock: Int!
   }
 
-  """ Get a specific customer """
   type Query {
+    # Customers
+
+    """ Get all customers - Optionally you can paginate it passing a limit of result and a offset """
     getCustomers(limit: Int, offset: Int): [Customer]
+
+    """ Get a specific customer by id """
     getCustomer(id: ID!): Customer
-    totalCustomers: String
+
+    """ Get total of customers on db """
+    totalCustomers: String,
+
+    # Products
+
+    """ Get all Products - Optionally you can paginate it passing a limit of result and a offset """
+    getProducts(limit: Int, offset: Int): [Product]
+
+    """ Get a specific product by id """
+    getProduct(id: ID!): Product
   }
 
-  """ Create new customer """
+  
   type Mutation {
+    #Customers
+
+    """ Create new customer """
     createCustomer(input: CustomerInput): Customer
+
+    """ Update an existing customer """
     updateCustomer(input: CustomerInput): Customer
+
+    """ Delete an existing customer """
     deleteCustomer(id: ID!): String
 
+    # Products
+
+    """ Create a new product """
     createProduct(input: ProductInput): Product
   }

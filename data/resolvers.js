@@ -8,21 +8,34 @@ export const resolvers = {
     },
 
     getCustomer : (root, { id }) => {
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         Customers.findById(id, (error, customer) => {
-          if (error) rejects(error);
+          if (error) reject(error);
           else resolve(customer);
         })
       });
     },
 
     totalCustomers: (root) => {
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         Customers.countDocuments({}, (error, count) => {
-          if (error) rejects(error);
+          if (error) reject(error);
           else resolve(count);
         })
       });
+    },
+
+    getProducts: (root, { limit, offset}) => {
+      return Products.find({}).limit(limit).skip(offset);
+    },
+
+    getProduct: (root, { id }) => {
+      return new Promise((resolve, reject) => {
+        Products.findById(id, (error, product) => {
+          if (error) reject(error);
+          else resolve(product);
+        })
+      })
     }
   },
   Mutation: {
@@ -38,27 +51,27 @@ export const resolvers = {
       });
       newCustomer.id = newCustomer._id;
 
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         newCustomer.save((error) => {
-          if (error) rejects(error)
+          if (error) reject(error)
           else resolve(newCustomer)
         })
       });
     },
 
     updateCustomer: (root, { input }) => {
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         Customers.findOneAndUpdate({ _id: input.id }, input , { new: true }, (error, customer) => {
-          if (error) rejects(error);
+          if (error) reject(error);
           else resolve(customer);
         });
       })
     },
 
     deleteCustomer: (root, { id }) => {
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         Customers.findOneAndRemove({ _id: id }, (error) => {
-          if (error) rejects(error);
+          if (error) reject(error);
           else resolve("Customer successfully deleted");
         });
       });
@@ -72,9 +85,9 @@ export const resolvers = {
       });
 
       newProduct.id = newProduct._id;
-      return new Promise((resolve, rejects) => {
+      return new Promise((resolve, reject) => {
         newProduct.save((error) => {
-          if (error) rejects(error);
+          if (error) reject(error);
           else resolve(newProduct);
         })
       })
