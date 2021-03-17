@@ -58,7 +58,7 @@
     id: ID
     name: String!
     price: Int!
-    Stock: Int!
+    stock: Int!
   }
 
   """ Get a specific customer """
