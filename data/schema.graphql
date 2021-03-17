@@ -93,7 +93,7 @@
     """ Update an existing customer """
     updateCustomer(input: CustomerInput): Customer
 
-    """ Delete an existing customer """
+    """ Delete a customer by id """
     deleteCustomer(id: ID!): String
 
     # Products
@@ -103,4 +103,7 @@
 
     """ Update an existing product """
     updateProduct(input: ProductInput): Product
+
+    """ Delete a product by id """
+    deleteProduct(id: ID!): String
   }

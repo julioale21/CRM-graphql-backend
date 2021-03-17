@@ -95,9 +95,18 @@ export const resolvers = {
 
     updateProduct: (root, { input }) => {
       return new Promise((resolve, reject) => {
-        Products.findByIdAndUpdate({ _id: input.id }, input, { new: true }, (error, product) => {
+        Products.findOneAndUpdate({ _id: input.id }, input, { new: true }, (error, product) => {
           if (error) reject(error);
           else resolve(product);
+        });
+      });
+    },
+
+    deleteProduct: (root, { id }) => {
+      return new Promise((resolve, reject) => {
+        Products.findOneAndRemove({ _id: id }, (error) => {
+          if (error) reject(error);
+          else resolve("Product successfully deleted");
         });
       });
     }
