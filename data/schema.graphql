@@ -81,6 +81,9 @@
     """ Get a specific product by id """
     getProduct(id: ID!): Product
 
+    """ Get total of products on db """
+    totalProducts: String
+
   }
 
   
