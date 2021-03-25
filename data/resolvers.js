@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Customers, Products } from "./db";
+import { Customers, Products, Orders } from "./db";
 
 export const resolvers = {
   Query: {
@@ -116,6 +116,24 @@ export const resolvers = {
         Products.findOneAndRemove({ _id: id }, (error) => {
           if (error) reject(error);
           else resolve("Product successfully deleted");
+        });
+      });
+    },
+
+    createOrder: (root, { input }) => {
+      const newOrder = new Orders({
+        order: input.order,
+        total: input.total,
+        date: new Date(),
+        customer: input.customer,
+        status: "PENDING",
+      });
+
+      newOrder.id = newOrder._id;
+      return new Promise((resolve, reject) => {
+        newOrder.save((error) => {
+          if (error) reject(error);
+          else resolve(newOrder);
         });
       });
     }

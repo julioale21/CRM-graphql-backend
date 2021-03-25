@@ -21,8 +21,17 @@
   }
 
   type Order {
-    product: String
-    price: Int
+    id: ID
+    order: [ProductOrder]
+    total: Int
+    date: String
+    customer: ID
+    status: OrderStatus
+  }
+
+  type ProductOrder {
+    id: ID
+    quantity: Int
   }
 
   """ Types of valid customers """
@@ -31,15 +40,16 @@
     PREMIUM
   }
 
+  """ Types of valid status of a order """
+  enum OrderStatus {
+    PENDING
+    COMPLETED
+    CANCELLED
+  }
+
   """ Fields input an email """
   input EmailInput {
     email: String
-  }
-
-  """ Fields to create a new order """
-  input OrderInput {
-    product: String
-    price: Int
   }
 
   """ Fields to create a new customer """
@@ -51,7 +61,6 @@
     emails: [EmailInput]!
     age: Int!
     type: CustomerType!
-    orders: [OrderInput]
   }
 
   input ProductInput {
@@ -59,6 +68,20 @@
     name: String!
     price: Int!
     stock: Int!
+  }
+
+  input OrderInput {
+    id: ID
+    order: [ProductOrderInput]
+    total: Int
+    date: String
+    customer: ID
+    status: OrderStatus
+  }
+
+  input ProductOrderInput {
+    id: ID
+    quantity: Int
   }
 
   type Query {
@@ -83,6 +106,11 @@
 
     """ Get total of products on db """
     totalProducts: String
+
+
+    # Orders
+
+
 
   }
 
@@ -109,4 +137,11 @@
 
     """ Delete a product by id """
     deleteProduct(id: ID!): String
+
+
+    # Orders
+
+    """ Create a new Order """
+    createOrder(input: OrderInput): Order
+
   }

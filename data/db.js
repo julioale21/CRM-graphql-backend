@@ -24,4 +24,13 @@ const productsSchema = new mongoose.Schema({
 });
 const Products = mongoose.model("products", productsSchema);
 
-export { Customers, Products };
+const ordersSchema = new mongoose.Schema({
+  order: Array,
+  total: Number,
+  date: Date,
+  customer: String,
+  status: String,
+});
+const Orders = mongoose.model("orders", ordersSchema);
+
+export { Customers, Products, Orders };
