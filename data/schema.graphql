@@ -99,7 +99,7 @@
     # Products
 
     """ Get all Products - Optionally you can paginate it passing a limit of result and a offset """
-    getProducts(limit: Int, offset: Int): [Product]
+    getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
 
     """ Get a specific product by id """
     getProduct(id: ID!): Product
