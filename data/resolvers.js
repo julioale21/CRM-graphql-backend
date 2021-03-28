@@ -158,6 +158,15 @@ export const resolvers = {
           else resolve(newOrder);
         });
       });
+    },
+
+    updateOrderStatus: (root, { input }) => {
+      return new Promise((resolve, reject) => {
+        Orders.findOneAndUpdate({_id: input.id}, input, { new: true }, (error) => {
+          if (error) reject(error);
+          else resolve("Updated successfully");
+        })
+      })
     }
   }
 }

@@ -146,4 +146,7 @@
     """ Create a new Order """
     createOrder(input: OrderInput): Order
 
+    """ Update the status of a given order """
+    updateOrderStatus(input: OrderInput): String
+
   }
