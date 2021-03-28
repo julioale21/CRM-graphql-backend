@@ -50,6 +50,15 @@ export const resolvers = {
         })
       });
     },
+
+    getOrders: (root, { customer }) => {
+      return new Promise((resolve, reject) => {
+        Orders.find({ customer }, (error, order) => {
+          if (error) reject(error);
+          else resolve(order);
+        })
+      });
+    },
   },
   Mutation: {
     createCustomer : (root, { input }) => {

@@ -110,6 +110,8 @@
 
     # Orders
 
+    """ Get all orders by customer """
+    getOrders(customer: String): [Order]
 
 
   }
