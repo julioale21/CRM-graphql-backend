@@ -59,7 +59,48 @@ export const resolvers = {
         })
       });
     },
+
+    topCustomers: (root) => {
+      return new Promise((resolve, reject) => {
+        Orders.aggregate([
+          { 
+              "$match" : { 
+                  "status" : "COMPLETED"
+              }
+          }, 
+          { 
+              "$group" : { 
+                  "_id" : "$customer", 
+                  "total" : { 
+                      "$sum" : "$total"
+                  }
+              }
+          }, 
+          { 
+              "$lookup" : { 
+                  "from" : "customers", 
+                  "localField" : "_id", 
+                  "foreignField" : "_id", 
+                  "as" : "customer"
+              }
+          },  
+          { 
+              "$sort" : { 
+                  "total" : -1.0
+              }
+          },
+          { 
+            "$limit" : 10.0
+          },
+        ], (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        });
+      })
+    }
   },
+
+
   Mutation: {
     createCustomer : (root, { input }) => {
       const newCustomer = new Customers({

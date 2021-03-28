@@ -1,152 +1,194 @@
-  type Customer {
-    id: ID
-    name: String
-    lastName: String
-    company: String
-    emails: [Email]
-    age: Int
-    type: CustomerType
-    orders: [Order]
-  }
+type Customer {
+  id: ID
+  name: String
+  lastName: String
+  company: String
+  emails: [Email]
+  age: Int
+  type: CustomerType
+  orders: [Order]
+}
 
-  type Email {
-    email: String
-  }
+type Email {
+  email: String
+}
 
-  type Product {
-    id: ID
-    name: String!
-    price: Int!
-    stock: Int!
-  }
+type Product {
+  id: ID
+  name: String!
+  price: Int!
+  stock: Int!
+}
 
-  type Order {
-    id: ID
-    order: [ProductOrder]
-    total: Int
-    date: String
-    customer: ID
-    status: OrderStatus
-  }
+type Order {
+  id: ID
+  order: [ProductOrder]
+  total: Int
+  date: String
+  customer: ID
+  status: OrderStatus
+}
 
-  type ProductOrder {
-    id: ID
-    quantity: Int
-  }
+type ProductOrder {
+  id: ID
+  quantity: Int
+}
 
-  """ Types of valid customers """
-  enum CustomerType {
-    BASIC
-    PREMIUM
-  }
+type TopCustomer {
+  total: Float
+  customer: [Customer]
+}
 
-  """ Types of valid status of a order """
-  enum OrderStatus {
-    PENDING
-    COMPLETED
-    CANCELLED
-  }
+"""
+ Types of valid customers
+"""
+enum CustomerType {
+  BASIC
+  PREMIUM
+}
 
-  """ Fields input an email """
-  input EmailInput {
-    email: String
-  }
+"""
+ Types of valid status of a order
+"""
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
 
-  """ Fields to create a new customer """
-  input CustomerInput {
-    id: ID
-    name: String!
-    lastName: String!
-    company: String!
-    emails: [EmailInput]!
-    age: Int!
-    type: CustomerType!
-  }
+"""
+ Fields input an email
+"""
+input EmailInput {
+  email: String
+}
 
-  input ProductInput {
-    id: ID
-    name: String!
-    price: Int!
-    stock: Int!
-  }
+"""
+ Fields to create a new customer
+"""
+input CustomerInput {
+  id: ID
+  name: String!
+  lastName: String!
+  company: String!
+  emails: [EmailInput]!
+  age: Int!
+  type: CustomerType!
+}
 
-  input OrderInput {
-    id: ID
-    order: [ProductOrderInput]
-    total: Int
-    date: String
-    customer: ID
-    status: OrderStatus
-  }
+input ProductInput {
+  id: ID
+  name: String!
+  price: Int!
+  stock: Int!
+}
 
-  input ProductOrderInput {
-    id: ID
-    quantity: Int
-  }
+input OrderInput {
+  id: ID
+  order: [ProductOrderInput]
+  total: Int
+  date: String
+  customer: ID
+  status: OrderStatus
+}
 
-  type Query {
-    # Customers
+input ProductOrderInput {
+  id: ID
+  quantity: Int
+}
 
-    """ Get all customers - Optionally you can paginate it passing a limit of result and a offset """
-    getCustomers(limit: Int, offset: Int): [Customer]
+type Query {
+  # Customers
 
-    """ Get a specific customer by id """
-    getCustomer(id: ID!): Customer
+  """
+   Get all customers - Optionally you can paginate it passing a limit of result and a offset
+  """
+  getCustomers(limit: Int, offset: Int): [Customer]
 
-    """ Get total of customers on db """
-    totalCustomers: String,
+  """
+   Get a specific customer by id
+  """
+  getCustomer(id: ID!): Customer
 
-    # Products
+  """
+   Get total of customers on db
+  """
+  totalCustomers: String
 
-    """ Get all Products - Optionally you can paginate it passing a limit of result and a offset """
-    getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
+  # Products
 
-    """ Get a specific product by id """
-    getProduct(id: ID!): Product
+  """
+   Get all Products - Optionally you can paginate it passing a limit of result and a offset
+  """
+  getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
 
-    """ Get total of products on db """
-    totalProducts: String
+  """
+   Get a specific product by id
+  """
+  getProduct(id: ID!): Product
 
+  """
+   Get total of products on db
+  """
+  totalProducts: String
 
-    # Orders
+  # Orders
 
-    """ Get all orders by customer """
-    getOrders(customer: String): [Order]
+  """
+   Get all orders by customer
+  """
+  getOrders(customer: String): [Order]
 
+  """
+   Get top 10 best customers
+  """
+  topCustomers: [TopCustomer]
+}
 
-  }
+type Mutation {
+  #Customers
 
-  
-  type Mutation {
-    #Customers
+  """
+   Create new customer
+  """
+  createCustomer(input: CustomerInput): Customer
 
-    """ Create new customer """
-    createCustomer(input: CustomerInput): Customer
+  """
+   Update an existing customer
+  """
+  updateCustomer(input: CustomerInput): Customer
 
-    """ Update an existing customer """
-    updateCustomer(input: CustomerInput): Customer
+  """
+   Delete a customer by id
+  """
+  deleteCustomer(id: ID!): String
 
-    """ Delete a customer by id """
-    deleteCustomer(id: ID!): String
+  # Products
 
-    # Products
+  """
+   Create a new product
+  """
+  createProduct(input: ProductInput): Product
 
-    """ Create a new product """
-    createProduct(input: ProductInput): Product
+  """
+   Update an existing product
+  """
+  updateProduct(input: ProductInput): Product
 
-    """ Update an existing product """
-    updateProduct(input: ProductInput): Product
+  """
+   Delete a product by id
+  """
+  deleteProduct(id: ID!): String
 
-    """ Delete a product by id """
-    deleteProduct(id: ID!): String
+  # Orders
 
+  """
+   Create a new Order
+  """
+  createOrder(input: OrderInput): Order
 
-    # Orders
-
-    """ Create a new Order """
-    createOrder(input: OrderInput): Order
-
-    """ Update the status of a given order """
-    updateOrderStatus(input: OrderInput): String
-
-  }
+  """
+   Update the status of a given order
+  """
+  updateOrderStatus(input: OrderInput): String
+}
