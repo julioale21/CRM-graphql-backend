@@ -144,15 +144,6 @@ export const resolvers = {
 
       newOrder.id = newOrder._id;
       return new Promise((resolve, reject) => {
-
-        input.order.forEach(element => {
-          Products.updateOne({ _id: element.id },
-            { "$inc": { "stock": -element.quantity }
-            }, function(error) {
-              if (error) return new Error(error);
-            });
-        });
-
         newOrder.save((error) => {
           if (error) reject(error);
           else resolve(newOrder);
@@ -162,6 +153,22 @@ export const resolvers = {
 
     updateOrderStatus: (root, { input }) => {
       return new Promise((resolve, reject) => {
+        const { status } = input;
+
+        let instruction;
+        if (status === "COMPLETED") {
+          instruction = "-";
+        } else if (status === "CANCELLED") {
+          instruction = "+";
+        };
+
+        input.order.forEach(element => {
+          Products.updateOne({ _id: element.id },
+            { "$inc": { "stock": `${instruction}${element.quantity}` }
+            }, function(error) {
+              if (error) return new Error(error);
+            });
+        });
         Orders.findOneAndUpdate({_id: input.id}, input, { new: true }, (error) => {
           if (error) reject(error);
           else resolve("Updated successfully");
