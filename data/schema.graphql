@@ -191,4 +191,9 @@ type Mutation {
    Update the status of a given order
   """
   updateOrderStatus(input: OrderInput): String
+
+  # Users
+
+  """ Create a new User """
+  createUser(username: String!, password: String!): String
 }

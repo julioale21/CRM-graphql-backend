@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Customers, Products, Orders } from "./db";
+import { Customers, Products, Orders, Users } from "./db";
 
 export const resolvers = {
   Query: {
@@ -215,6 +215,18 @@ export const resolvers = {
           else resolve("Updated successfully");
         })
       })
+    },
+
+    createUser: async(root, { username, password }) => {
+      const user = await Users.findOne({ username });
+      if (user) throw new Error("User already exists");
+
+      const newUser = await new Users({
+        username,
+        password
+      }).save();
+
+      return "User successfully created";
     }
   }
 }
