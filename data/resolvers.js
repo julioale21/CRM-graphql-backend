@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Customers, Products, Orders, Users } from "./db";
+import bcrypt from "bcrypt";
 
 export const resolvers = {
   Query: {
