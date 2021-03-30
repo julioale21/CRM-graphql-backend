@@ -9,6 +9,20 @@
   },
   "author": "julio romero",
   "license": "MIT",
+  "dependencies": {
+    "apollo-server-express": "^2.21.1",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^8.2.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0",
+    "graphql-import": "^0.7.1",
+    "graphql-tools": "^7.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.15",
+    "nodemon": "^2.0.7"
+  },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^10.1.0",
@@ -18,19 +32,5 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1"
-  },
-  "dependencies": {
-    "apollo-server-express": "^2.22.2",
-    "bcrypt": "^5.0.1",
-    "dotenv": "^8.2.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "express": "^4.17.1",
-    "express-graphql": "^0.12.0",
-    "graphql": "^15.5.0",
-    "graphql-import": "^1.0.2",
-    "graphql-tools": "^4.0.8",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.2",
-    "nodemon": "^2.0.7"
   }
 }
