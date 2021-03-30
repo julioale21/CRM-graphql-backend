@@ -1,6 +1,15 @@
 import mongoose from "mongoose";
 import { Customers, Products, Orders, Users } from "./db";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
+dotenv.config({ path: "variables.env"});
+
+const createToken = (user, secret, expiresIn) => {
+  const { username } = user;
+  return jwt.sign({ username }, secret, { expiresIn });
+};
 
 export const resolvers = {
   Query: {
@@ -237,7 +246,9 @@ export const resolvers = {
       const correctPassword = await bcrypt.compare(password, user.password);
       if (!correctPassword) throw new Error("Wrong password");
       
-      return user.username;
+      return {
+        token: createToken(user, process.env.SECRET, "1h"),
+      };
     }
   }
 }
