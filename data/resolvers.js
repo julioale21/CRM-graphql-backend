@@ -107,6 +107,14 @@ export const resolvers = {
           else resolve(result);
         });
       })
+    },
+
+    getUser: (root, args, { currentUser }) => {
+      if (!currentUser) return null;
+      console.log(currentUser);
+
+      const user = Users.findOne({ username: currentUser.username });
+      return user;
     }
   },
 

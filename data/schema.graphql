@@ -43,6 +43,10 @@ type Token {
   token: String
 }
 
+type User {
+  username: String
+}
+
 """
  Types of valid customers
 """
@@ -133,6 +137,7 @@ type Query {
 
   """
    Get total of products on db
+
   """
   totalProducts: String
 
@@ -140,13 +145,18 @@ type Query {
 
   """
    Get all orders by customer
+
   """
   getOrders(customer: String): [Order]
 
   """
    Get top 10 best customers
+
   """
   topCustomers: [TopCustomer]
+
+  """ Get current user """
+  getUser: User
 }
 
 type Mutation {
