@@ -228,6 +228,16 @@ export const resolvers = {
       }).save();
 
       return "User successfully created";
+    },
+
+    authenticateUser: async (root, { username, password }) => {
+      const user = await Users.findOne({ username });
+      if (!user) throw new Error("User not found");
+
+      const correctPassword = await bcrypt.compare(password, user.password);
+      if (!correctPassword) throw new Error("Wrong password");
+      
+      return user.username;
     }
   }
 }

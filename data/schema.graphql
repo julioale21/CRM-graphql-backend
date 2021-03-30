@@ -39,6 +39,10 @@ type TopCustomer {
   customer: [Customer]
 }
 
+type Token {
+  token: String
+}
+
 """
  Types of valid customers
 """
@@ -196,4 +200,7 @@ type Mutation {
 
   """ Create a new User """
   createUser(username: String!, password: String!): String
+
+  """ Authenticate a user by username and password """
+  authenticateUser(username: String!, password: String!): Token
 }
