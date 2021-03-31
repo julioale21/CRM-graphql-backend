@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-dotenv.config({ path: "variables.env"});
+dotenv.config({ path: "variables.env" });
 
 const createToken = (user, secret, expiresIn) => {
   const { username } = user;
@@ -17,28 +17,28 @@ export const resolvers = {
       return Customers.find({}).limit(limit).skip(offset);
     },
 
-    getCustomer : (root, { id }) => {
+    getCustomer: (root, { id }) => {
       return new Promise((resolve, reject) => {
         Customers.findById(id, (error, customer) => {
           if (error) reject(error);
           else resolve(customer);
-        })
+        });
       });
     },
 
-    totalCustomers: (root) => {
+    totalCustomers: root => {
       return new Promise((resolve, reject) => {
         Customers.countDocuments({}, (error, count) => {
           if (error) reject(error);
           else resolve(count);
-        })
+        });
       });
     },
 
-    getProducts: (root, { limit, offset, stock}) => {
+    getProducts: (root, { limit, offset, stock }) => {
       let filter;
       if (stock) {
-        filter = { stock: { $gt: 0 } }
+        filter = { stock: { $gt: 0 } };
       }
       return Products.find(filter).limit(limit).skip(offset);
     },
@@ -52,12 +52,12 @@ export const resolvers = {
       });
     },
 
-    totalProducts: (root) => {
+    totalProducts: root => {
       return new Promise((resolve, reject) => {
         Products.countDocuments({}, (error, count) => {
           if (error) reject(error);
           else resolve(count);
-        })
+        });
       });
     },
 
@@ -66,47 +66,50 @@ export const resolvers = {
         Orders.find({ customer }, (error, order) => {
           if (error) reject(error);
           else resolve(order);
-        })
+        });
       });
     },
 
-    topCustomers: (root) => {
+    topCustomers: root => {
       return new Promise((resolve, reject) => {
-        Orders.aggregate([
-          { 
-              "$match" : { 
-                  "status" : "COMPLETED"
-              }
-          }, 
-          { 
-              "$group" : { 
-                  "_id" : "$customer", 
-                  "total" : { 
-                      "$sum" : "$total"
-                  }
-              }
-          }, 
-          { 
-              "$lookup" : { 
-                  "from" : "customers", 
-                  "localField" : "_id", 
-                  "foreignField" : "_id", 
-                  "as" : "customer"
-              }
-          },  
-          { 
-              "$sort" : { 
-                  "total" : -1.0
-              }
+        Orders.aggregate(
+          [
+            {
+              $match: {
+                status: "COMPLETED",
+              },
+            },
+            {
+              $group: {
+                _id: "$customer",
+                total: {
+                  $sum: "$total",
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: "customers",
+                localField: "_id",
+                foreignField: "_id",
+                as: "customer",
+              },
+            },
+            {
+              $sort: {
+                total: -1.0,
+              },
+            },
+            {
+              $limit: 10.0,
+            },
+          ],
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
           },
-          { 
-            "$limit" : 10.0
-          },
-        ], (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        });
-      })
+        );
+      });
     },
 
     getUser: (root, args, { currentUser }) => {
@@ -115,12 +118,11 @@ export const resolvers = {
 
       const user = Users.findOne({ username: currentUser.username });
       return user;
-    }
+    },
   },
 
-
   Mutation: {
-    createCustomer : (root, { input }) => {
+    createCustomer: (root, { input }) => {
       const newCustomer = new Customers({
         name: input.name,
         lastName: input.lastName,
@@ -133,25 +135,25 @@ export const resolvers = {
       newCustomer.id = newCustomer._id;
 
       return new Promise((resolve, reject) => {
-        newCustomer.save((error) => {
-          if (error) reject(error)
-          else resolve(newCustomer)
-        })
+        newCustomer.save(error => {
+          if (error) reject(error);
+          else resolve(newCustomer);
+        });
       });
     },
 
     updateCustomer: (root, { input }) => {
       return new Promise((resolve, reject) => {
-        Customers.findOneAndUpdate({ _id: input.id }, input , { new: true }, (error, customer) => {
+        Customers.findOneAndUpdate({ _id: input.id }, input, { new: true }, (error, customer) => {
           if (error) reject(error);
           else resolve(customer);
         });
-      })
+      });
     },
 
     deleteCustomer: (root, { id }) => {
       return new Promise((resolve, reject) => {
-        Customers.findOneAndRemove({ _id: id }, (error) => {
+        Customers.findOneAndRemove({ _id: id }, error => {
           if (error) reject(error);
           else resolve("Customer successfully deleted");
         });
@@ -167,11 +169,11 @@ export const resolvers = {
 
       newProduct.id = newProduct._id;
       return new Promise((resolve, reject) => {
-        newProduct.save((error) => {
+        newProduct.save(error => {
           if (error) reject(error);
           else resolve(newProduct);
-        })
-      })
+        });
+      });
     },
 
     updateProduct: (root, { input }) => {
@@ -185,7 +187,7 @@ export const resolvers = {
 
     deleteProduct: (root, { id }) => {
       return new Promise((resolve, reject) => {
-        Products.findOneAndRemove({ _id: id }, (error) => {
+        Products.findOneAndRemove({ _id: id }, error => {
           if (error) reject(error);
           else resolve("Product successfully deleted");
         });
@@ -203,7 +205,7 @@ export const resolvers = {
 
       newOrder.id = newOrder._id;
       return new Promise((resolve, reject) => {
-        newOrder.save((error) => {
+        newOrder.save(error => {
           if (error) reject(error);
           else resolve(newOrder);
         });
@@ -219,29 +221,31 @@ export const resolvers = {
           instruction = "-";
         } else if (status === "CANCELLED") {
           instruction = "+";
-        };
+        }
 
         input.order.forEach(element => {
-          Products.updateOne({ _id: element.id },
-            { "$inc": { "stock": `${instruction}${element.quantity}` }
-            }, function(error) {
+          Products.updateOne(
+            { _id: element.id },
+            { $inc: { stock: `${instruction}${element.quantity}` } },
+            function (error) {
               if (error) return new Error(error);
-            });
+            },
+          );
         });
-        Orders.findOneAndUpdate({_id: input.id}, input, { new: true }, (error) => {
+        Orders.findOneAndUpdate({ _id: input.id }, input, { new: true }, error => {
           if (error) reject(error);
           else resolve("Updated successfully");
-        })
-      })
+        });
+      });
     },
 
-    createUser: async(root, { username, password }) => {
+    createUser: async (root, { username, password }) => {
       const user = await Users.findOne({ username });
       if (user) throw new Error("User already exists");
 
       const newUser = await new Users({
         username,
-        password
+        password,
       }).save();
 
       return "User successfully created";
@@ -253,10 +257,10 @@ export const resolvers = {
 
       const correctPassword = await bcrypt.compare(password, user.password);
       if (!correctPassword) throw new Error("Wrong password");
-      
+
       return {
         token: createToken(user, process.env.SECRET, "1h"),
       };
-    }
-  }
-}
+    },
+  },
+};

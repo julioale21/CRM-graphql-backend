@@ -6,17 +6,17 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config({
-  path: "variables.env"
+  path: "variables.env",
 });
 
 const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async({ req }) => {
+  context: async ({ req }) => {
     const token = req.headers["authorization"];
 
-    if (token !== "null") {
+    if (token !== "null" && token !== undefined) {
       try {
         const currentUser = await jwt.verify(token, process.env.SECRET);
         req.currentUser = currentUser;
@@ -27,7 +27,7 @@ const server = new ApolloServer({
         console.error(error);
       }
     }
-  }
+  },
 });
 
 server.applyMiddleware({ app });

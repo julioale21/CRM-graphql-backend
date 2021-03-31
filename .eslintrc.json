@@ -1,8 +1,9 @@
 {
-    "extends": ["airbnb-base", "plugin:prettier/recommended"],
+    "extends": ["plugin:prettier/recommended"],
     "plugins": ["prettier"],
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2018,
+        "sourceType": "module"
     },
     "rules": {
         "prettier/prettier": "error"
