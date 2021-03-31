@@ -239,12 +239,14 @@ export const resolvers = {
       });
     },
 
-    createUser: async (root, { username, password }) => {
+    createUser: async (root, { username, name, role, password }) => {
       const user = await Users.findOne({ username });
       if (user) throw new Error("User already exists");
 
       const newUser = await new Users({
         username,
+        name,
+        rol,
         password,
       }).save();
 
