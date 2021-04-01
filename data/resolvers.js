@@ -114,8 +114,6 @@ export const resolvers = {
 
     getUser: (root, args, { currentUser }) => {
       if (!currentUser) return null;
-      console.log(currentUser);
-
       const user = Users.findOne({ username: currentUser.username });
       return user;
     },
@@ -246,7 +244,7 @@ export const resolvers = {
       const newUser = await new Users({
         username,
         name,
-        rol,
+        role,
         password,
       }).save();
 

@@ -44,7 +44,10 @@ type Token {
 }
 
 type User {
+  id: ID
   username: String
+  name: String
+  role: String
 }
 
 """
