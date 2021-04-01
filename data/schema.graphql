@@ -85,6 +85,9 @@ input CustomerInput {
   emails: [EmailInput]!
   age: Int!
   type: CustomerType!
+  orders: [OrderInput]
+  seller: ID
+
 }
 
 input ProductInput {
@@ -114,7 +117,7 @@ type Query {
   """
    Get all customers - Optionally you can paginate it passing a limit of result and a offset
   """
-  getCustomers(limit: Int, offset: Int): [Customer]
+  getCustomers(limit: Int, offset: Int, seller: String): [Customer]
 
   """
    Get a specific customer by id
@@ -124,7 +127,7 @@ type Query {
   """
    Get total of customers on db
   """
-  totalCustomers: String
+  totalCustomers(seller: String): String
 
   # Products
 

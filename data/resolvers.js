@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
+const ObjectId = mongoose.Types.ObjectId;
+
 dotenv.config({ path: "variables.env" });
 
 const createToken = (user, secret, expiresIn) => {
@@ -13,8 +15,12 @@ const createToken = (user, secret, expiresIn) => {
 
 export const resolvers = {
   Query: {
-    getCustomers: (root, { limit, offset }) => {
-      return Customers.find({}).limit(limit).skip(offset);
+    getCustomers: (root, { limit, offset, seller }) => {
+      let filter;
+      if (seller) {
+        filter = { seller: ObjectId(seller) };
+      }
+      return Customers.find(filter).limit(limit).skip(offset);
     },
 
     getCustomer: (root, { id }) => {
@@ -26,9 +32,13 @@ export const resolvers = {
       });
     },
 
-    totalCustomers: root => {
+    totalCustomers: (root, { seller }) => {
+      let filter;
+      if (seller) {
+        filter = { seller: ObjectId(seller) };
+      }
       return new Promise((resolve, reject) => {
-        Customers.countDocuments({}, (error, count) => {
+        Customers.countDocuments(filter, (error, count) => {
           if (error) reject(error);
           else resolve(count);
         });
@@ -129,6 +139,7 @@ export const resolvers = {
         age: input.age,
         type: input.type,
         orders: input.orders,
+        seller: input.seller,
       });
       newCustomer.id = newCustomer._id;
 
