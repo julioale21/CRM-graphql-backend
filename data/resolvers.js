@@ -210,6 +210,7 @@ export const resolvers = {
         date: new Date(),
         customer: input.customer,
         status: "PENDING",
+        seller: input.seller,
       });
 
       newOrder.id = newOrder._id;

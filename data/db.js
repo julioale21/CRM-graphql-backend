@@ -33,6 +33,7 @@ const ordersSchema = new mongoose.Schema({
   date: Date,
   customer: mongoose.Types.ObjectId,
   status: String,
+  seller: mongoose.Types.ObjectId,
 });
 const Orders = mongoose.model("orders", ordersSchema);
 

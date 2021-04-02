@@ -103,7 +103,8 @@ input OrderInput {
   total: Int
   date: String
   customer: ID
-  status: OrderStatus
+  status: OrderStatus,
+  seller: ID,
 }
 
 input ProductOrderInput {
