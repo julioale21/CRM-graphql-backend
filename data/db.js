@@ -1,10 +1,17 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: "variables.env",
+});
 
 mongoose.Promise = global.Promise;
 
-const url =
+/* const url =
   "mongodb://crm-backend:admin@cluster0-shard-00-00.qxvzw.mongodb.net:27017,cluster0-shard-00-01.qxvzw.mongodb.net:27017,cluster0-shard-00-02.qxvzw.mongodb.net:27017/crm-backend?ssl=true&replicaSet=atlas-jn19zg-shard-0&authSource=admin&retryWrites=true&w=majority";
+ */
+const url = process.env.MONGO_URI;
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
