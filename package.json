@@ -8,10 +8,7 @@
   },
   "scripts": {
     "test": "npm run test:unit",
-    "clean": "rm -rf build && mkdir build",
-    "build-babel": "babel -d ./build ./src -s",
-    "build": "npm run clean && npm run build-babel",
-    "start": "npm run build && node ./build/index.js"
+    "start": "nodemon ./index.js --exec babel-node -e js"
   },
   "author": "julio romero",
   "license": "MIT",
@@ -36,7 +33,6 @@
     "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "nodemon": "^2.0.7",
     "prettier": "^2.2.1"
   }
 }
