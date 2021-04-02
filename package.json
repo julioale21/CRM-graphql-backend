@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "A Graphql API to be consumed by the CRM frontend (Udemy course)",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "test": "npm run test:unit",
-    "start": "nodemon ./index.js --exec babel-node -e js",
-    "build":"webpack"
+    "start": "nodemon ./index.js --exec babel-node -e js"
   },
   "author": "julio romero",
   "license": "MIT",
