@@ -39,6 +39,11 @@ type TopCustomer {
   customer: [Customer]
 }
 
+type TopSeller {
+  total: Float
+  seller: [User]
+}
+
 type Token {
   token: String
 }
@@ -158,9 +163,11 @@ type Query {
 
   """
    Get top 10 best customers
-
   """
   topCustomers: [TopCustomer]
+
+  """ Get top 10 best sellers """
+  topSellers: [TopSeller]
 
   """ Get current user """
   getUser: User

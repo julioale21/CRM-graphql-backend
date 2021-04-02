@@ -122,6 +122,48 @@ export const resolvers = {
       });
     },
 
+    topSellers: root => {
+      return new Promise((resolve, reject) => {
+        Orders.aggregate(
+          [
+            {
+              $match: {
+                status: "COMPLETED",
+              },
+            },
+            {
+              $group: {
+                _id: "$seller",
+                total: {
+                  $sum: "$total",
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "_id",
+                foreignField: "_id",
+                as: "seller",
+              },
+            },
+            {
+              $sort: {
+                total: -1.0,
+              },
+            },
+            {
+              $limit: 10.0,
+            },
+          ],
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          },
+        );
+      });
+    },
+
     getUser: (root, args, { currentUser }) => {
       if (!currentUser) return null;
       const user = Users.findOne({ username: currentUser.username });
