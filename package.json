@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "npm run test:unit",
-    "start": "babel-node ./index.js"
+    "start": "nodemon ./index.js --exec babel-node -e js"
   },
   "author": "julio romero",
   "license": "MIT",
@@ -26,7 +26,7 @@
     "mongoose": "^5.11.15"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
