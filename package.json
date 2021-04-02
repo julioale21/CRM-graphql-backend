@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "npm run test:unit",
-    "start": "nodemon ./index.js --exec babel-node -e js"
+    "start": "babel-node ./index.js"
   },
   "author": "julio romero",
   "license": "MIT",
